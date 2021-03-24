@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "600745432184",
+    "project_id": "groceryus-58e70",
+    "storage_bucket": "groceryus-58e70.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600745432184:android:aa8851e89f2e4d4d41098d",
+        "android_client_info": {
+          "package_name": "com.zt.groceryus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "600745432184-qbc3sv7fp6qpun05boegdtvr8cjd8sfp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLLPhU-awQ6cWaZOGJgMdjtIJbJ5jB8fQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "600745432184-qbc3sv7fp6qpun05boegdtvr8cjd8sfp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
