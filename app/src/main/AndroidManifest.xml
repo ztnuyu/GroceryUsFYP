@@ -16,7 +16,11 @@
         android:roundIcon="@id/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activities.ShopReviewsActivity"></activity>
+        <activity android:name=".activities.AddPromotionCodeActivity"></activity>
+        <activity android:name=".activities.PromotionCodesActivity" />
+        <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".activities.OrderDetailsSellerActivity" />
+        <activity android:name=".activities.ShopReviewsActivity" />
         <activity android:name=".activities.WriteReviewActivity" />
         <activity android:name=".activities.OrderDetailsUsersActivity" /> <!-- hidekeyboard -->
         <activity
@@ -41,7 +45,12 @@
         </activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
+            android:theme="@style/Base.Theme.AppCompat" /> <!-- register service to allow run in background -->
+        <service android:name=".MyFirebaseMessaging">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

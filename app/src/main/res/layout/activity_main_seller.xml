@@ -13,14 +13,24 @@
         android:padding="10dp"
         android:background="@drawable/shape_rect01" >
 
+<!--        more button-->
+        <ImageButton
+            android:id="@+id/moreBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_more_white"
+            android:layout_alignParentEnd="true"
+            android:background="@null"
+            android:layout_alignParentRight="true" />
+
         <ImageButton
             android:id="@+id/logoutBtn"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_logout_white"
-            android:layout_alignParentEnd="true"
             android:background="@null"
-            android:layout_alignParentRight="true" />
+            android:layout_toStartOf="@+id/moreBtn"
+            android:layout_toLeftOf="@+id/moreBtn" />
 
         <ImageButton
             android:id="@+id/editProfileBtn"
@@ -40,6 +50,7 @@
             android:layout_toStartOf="@+id/editProfileBtn"
             android:background="@null"
             android:layout_toLeftOf="@+id/editProfileBtn" />
+
 
         <com.blogspot.atifsoftwares.circularimageview.CircularImageView
             android:id="@+id/profileIv"
@@ -173,6 +184,7 @@
 
     </RelativeLayout>
 
+<!--    Orders -->
     <RelativeLayout
         android:id="@+id/ordersRl"
         android:layout_below="@+id/toolbarRl"

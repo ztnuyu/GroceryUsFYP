@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GroceryUs</string>
+    <string name="promotion_codes">Promotion Codes</string>
 </resources>

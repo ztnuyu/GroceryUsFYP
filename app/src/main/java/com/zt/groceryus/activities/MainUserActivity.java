@@ -37,7 +37,7 @@ public class MainUserActivity extends AppCompatActivity {
 
     private TextView nameTv, emailTv, phoneTv, tabShopsTv, tabOrdersTv;
     private RelativeLayout shopsRl, ordersRl;
-    private ImageButton logoutBtn, editProfileBtn;
+    private ImageButton logoutBtn, editProfileBtn, settingsBtn;
     private ImageView profileIv;
     private RecyclerView shopsRv, ordersRv;
 
@@ -68,6 +68,7 @@ public class MainUserActivity extends AppCompatActivity {
         profileIv = findViewById(R.id.profileIv);
         shopsRv = findViewById(R.id.shopsRv);
         ordersRv = findViewById(R.id.ordersRv);
+        settingsBtn = findViewById(R.id.settingsBtn);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait");
@@ -107,6 +108,13 @@ public class MainUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showOrdersUI();
+            }
+        });
+
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainUserActivity.this, SettingsActivity.class));
             }
         });
     }

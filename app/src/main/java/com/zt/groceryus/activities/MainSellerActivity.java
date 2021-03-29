@@ -11,10 +11,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +42,7 @@ import java.util.HashMap;
 public class MainSellerActivity extends AppCompatActivity {
 
     private TextView nameTv, shopNameTv, emailTv, tabProductsTv, tabOrdersTv , filteredProductsTv, filteredOrdersTv;
-    private ImageButton logoutBtn, editProfileBtn, addProductBtn, filterProductBtn, filterOrderBtn;
+    private ImageButton logoutBtn, editProfileBtn, addProductBtn, filterProductBtn, filterOrderBtn, moreBtn;
     private EditText searchProductEt;
     private ImageView profileIv;
     private RelativeLayout productsRl, ordersRl;
@@ -66,18 +68,19 @@ public class MainSellerActivity extends AppCompatActivity {
         tabProductsTv = findViewById(R.id.tabProductsTv);
         tabOrdersTv = findViewById(R.id.tabOrdersTv);
         filteredProductsTv = findViewById(R.id.filteredProductsTv);
-        filteredOrdersTv = findViewById(R.id.filteredOrdersTv);
+        searchProductEt = findViewById(R.id.searchProductEt);
         logoutBtn = findViewById(R.id.logoutBtn);
         editProfileBtn = findViewById(R.id.editProfileBtn);
         addProductBtn = findViewById(R.id.addProductBtn);
         filterProductBtn = findViewById(R.id.filterProductBtn);
-        filterOrderBtn = findViewById(R.id.filterOrderBtn);
-        searchProductEt = findViewById(R.id.searchProductEt);
         profileIv = findViewById(R.id.profileIv);
         productsRl = findViewById(R.id.productsRl);
         ordersRl = findViewById(R.id.ordersRl);
         productsRv = findViewById(R.id.productsRv);
+        filteredOrdersTv = findViewById(R.id.filteredOrdersTv);
+        filterOrderBtn = findViewById(R.id.filterOrderBtn);
         ordersRv = findViewById(R.id.ordersRv);
+        moreBtn = findViewById(R.id.moreBtn);
 
 
         progressDialog = new ProgressDialog(this);
@@ -85,7 +88,7 @@ public class MainSellerActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         firebaseAuth = FirebaseAuth.getInstance();
         checkUser();
-        loadAllProduct();
+        loadAllProducts();
         loadAllOrders();
 
         showProductsUI();
@@ -158,7 +161,7 @@ public class MainSellerActivity extends AppCompatActivity {
                                 String selected = Constants.productCategories1[which];
                                 filteredProductsTv.setText(selected);
                                 if (selected.equals("All")){
-                                    loadAllProduct();
+                                    loadAllProducts();
                                 }else {
                                     loadFilteredProducts(selected);
                                 }
@@ -167,6 +170,7 @@ public class MainSellerActivity extends AppCompatActivity {
                 .show();
             }
         });
+
 
         filterOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,6 +192,33 @@ public class MainSellerActivity extends AppCompatActivity {
                             }
                         })
                         .show();
+            }
+        });
+
+
+        PopupMenu popupMenu = new PopupMenu(MainSellerActivity.this, moreBtn);
+        popupMenu.getMenu().add("Settings");
+        popupMenu.getMenu().add("Reviews");
+        popupMenu.getMenu().add("Promotion Codes");
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                if (menuItem.getTitle() == "Settings"){
+                    startActivity(new Intent(MainSellerActivity.this, SettingsActivity.class));
+                }else if (menuItem.getTitle() == "Reviews"){
+                    Intent intent = new Intent(MainSellerActivity.this, ShopReviewsActivity.class);
+                    intent.putExtra("shopUid", ""+firebaseAuth.getUid());
+                    startActivity(intent);
+                }else if (menuItem.getTitle() == "Promotion Codes"){
+                    startActivity(new Intent(MainSellerActivity.this, PromotionCodesActivity.class));
+                }
+                return true;
+            }
+        });
+        moreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupMenu.show();
             }
         });
     }
@@ -248,7 +279,7 @@ public class MainSellerActivity extends AppCompatActivity {
                 });
     }
 
-    private void loadAllProduct() {
+    private void loadAllProducts() {
         productList = new ArrayList<>();
         //get all product
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");

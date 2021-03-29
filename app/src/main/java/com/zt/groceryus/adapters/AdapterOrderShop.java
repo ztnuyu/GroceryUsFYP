@@ -1,6 +1,7 @@
 package com.zt.groceryus.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.zt.groceryus.FilterOrderShop;
 import com.zt.groceryus.R;
+import com.zt.groceryus.activities.OrderDetailsSellerActivity;
 import com.zt.groceryus.models.ModelOrderShop;
 
 import java.util.ArrayList;
@@ -76,7 +78,10 @@ public class AdapterOrderShop extends RecyclerView.Adapter<AdapterOrderShop.Hold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, OrderDetailsSellerActivity.class);
+                intent.putExtra("orderId", orderId); //load order info
+                intent.putExtra("orderBy", orderBy); // load info on who placed the order
+                context.startActivity(intent);
             }
         });
 
