@@ -120,6 +120,13 @@ public class OrderDetailsUsersActivity extends AppCompatActivity {
                         String deliveryFee = "" + dataSnapshot.child("deliveryFee").getValue();
                         String latitude = "" + dataSnapshot.child("latitude").getValue();
                         String longitude = "" + dataSnapshot.child("longitude").getValue();
+                        String discount = ""+dataSnapshot.child("discount").getValue();
+
+                        if (discount.equals("null") || discount.equals("0")){
+                            discount = "& Discount $0";
+                        }else{
+                            discount = "& Discount $"+discount;
+                        }
 
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTimeInMillis(Long.parseLong(orderTime));
@@ -135,7 +142,7 @@ public class OrderDetailsUsersActivity extends AppCompatActivity {
 
                         orderIdTv.setText(orderId);
                         orderStatusTv.setText(orderStatus);
-                        amountTv.setText("$"+orderCost+"[Including delivery fee $"+deliveryFee+"]");
+                        amountTv.setText("$"+orderCost+" [Including delivery fee $"+deliveryFee+ " "+discount+"]");
                         //amountTv.setText("$"+orderCost+" [Including delivery fee]");
                         dateTv.setText(formatedDate);
 
