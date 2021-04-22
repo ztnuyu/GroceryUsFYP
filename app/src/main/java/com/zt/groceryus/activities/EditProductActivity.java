@@ -88,7 +88,6 @@ public class EditProductActivity extends AppCompatActivity {
         discountSwitch = findViewById(R.id.discountSwitch);
         updateProductBtn = findViewById(R.id.updateProductBtn);
 
-
         productId = getIntent().getStringExtra("productId");
 
         //on start is unchecked so hide both
