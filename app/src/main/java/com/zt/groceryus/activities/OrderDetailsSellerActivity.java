@@ -334,7 +334,7 @@ public class OrderDetailsSellerActivity extends AppCompatActivity {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/json");
                 headers.put("Authotization", "key="+ Constants.FCM_KEY);
-                return super.getHeaders();
+                return headers;
             }
         };
 

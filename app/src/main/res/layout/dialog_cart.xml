@@ -128,6 +128,8 @@
 
             </RelativeLayout>
 
+            <!--            payment options layout-->
+
             <TextView
                 android:layout_below="@id/promoRl"
                 android:id="@+id/sTotalLabelTv"
@@ -222,11 +224,41 @@
         <Button
             android:id="@+id/checkoutBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:background="@color/colorPrimary"
-            android:padding="15dp"
-            android:text="Confirm Order"
-            android:textColor="@color/colorWhite"/>
+            android:padding="10dp"
+            android:text="Cash On Delivery"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="Or Pay Using"
+            android:textAlignment="center"
+            android:textStyle="italic"
+            android:textSize="16sp"
+            android:gravity="center_horizontal" />
+
+        <Button
+            android:id="@+id/checkoutBtnPayPal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/colorPrimary"
+            android:padding="10dp"
+            android:text="PayPal"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text=""
+            android:textAlignment="center"
+            android:textStyle="italic"
+            android:textSize="16sp"
+            android:gravity="center_horizontal" />
+
 
     </LinearLayout>
 

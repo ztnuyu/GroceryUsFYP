@@ -16,7 +16,8 @@
         android:roundIcon="@id/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activities.AddPromotionCodeActivity"></activity>
+        <activity android:name=".activities.OptionsPaymentOrder"></activity>
+        <activity android:name=".activities.AddPromotionCodeActivity" />
         <activity android:name=".activities.PromotionCodesActivity" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.OrderDetailsSellerActivity" />

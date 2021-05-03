@@ -1,6 +1,7 @@
 package com.zt.groceryus.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +41,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.squareup.picasso.Picasso;
+import com.zt.groceryus.Config.Config;
 import com.zt.groceryus.Constants;
 import com.zt.groceryus.R;
 import com.zt.groceryus.adapters.AdapterCartItem;
@@ -48,8 +57,10 @@ import com.zt.groceryus.models.ModelCartItem;
 import com.zt.groceryus.models.ModelProduct;
 import com.zt.groceryus.models.ModelReview;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -62,6 +73,12 @@ import p32929.androideasysql_library.EasyDB;
 
 public class ShopDetailsActivity extends AppCompatActivity {
 
+//    //paypal sdk integration
+//    public static final int PAYPAL_REQUEST_CODE = 7171;
+//
+//    private static PayPalConfiguration config = new PayPalConfiguration()
+//            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+//            .clientId(Config.PAYPAL_CLIENT_ID);
 
     private ImageView shopIv;
     private TextView shopNameTv, phoneTv, emailTv, openCloseTv, deliveryFeeTv, addressTv, filteredProductsTv, cartCountTv;
@@ -87,10 +104,18 @@ public class ShopDetailsActivity extends AppCompatActivity {
 
     private EasyDB easyDB;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_details);
+
+//        //Start PayPal Service
+//        Intent intent1 = new Intent(this, PayPalService.class);
+//        intent1.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+//        startService(intent1);
+
+
 
         shopIv = findViewById(R.id.shopIv);
         shopNameTv = findViewById(R.id.shopNameTv);
@@ -236,8 +261,12 @@ public class ShopDetailsActivity extends AppCompatActivity {
     //need to access these views in adapter
     public TextView sTotalTv, dFeeTv, allTotalPriceTv, promoDescriptionTv, discountTv;
     public EditText promoCodeEt;
+    public RadioGroup paymentRg;
+    public RadioButton radioCod, radioPayPal;
     public Button applyBtn;
 
+
+    //nak order! place order dialog
     private void showCartDialog() {
 
         cartItemList = new ArrayList<>();
@@ -255,7 +284,9 @@ public class ShopDetailsActivity extends AppCompatActivity {
         sTotalTv = view.findViewById(R.id.sTotalTv);
         dFeeTv = view.findViewById(R.id.dFeeTv);
         allTotalPriceTv= view.findViewById(R.id.totalTv);
+
         Button checkoutBtn = view.findViewById(R.id.checkoutBtn);
+
 
         //whenever cart dailog shows, check if promo cocde is applied or not
         if (isPromoCodeApplied){
@@ -346,8 +377,12 @@ public class ShopDetailsActivity extends AppCompatActivity {
                 }
 
                 submitOrder();
+//                Intent intent = new Intent(ShopDetailsActivity.this, OptionsPaymentOrder.class);
+//                startActivity(intent);
             }
         });
+
+
 
         validateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -380,6 +415,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
 
 
     }
+
 
     private void priceWithDiscount(){
         discountTv.setText("$"+promoPrice);
@@ -497,11 +533,19 @@ public class ShopDetailsActivity extends AppCompatActivity {
 
 
     private void submitOrder() {
+
         progressDialog.setMessage("Placing order. Please wait...");
         progressDialog.show();
 
         String timestamp = ""+System.currentTimeMillis();
         String cost = allTotalPriceTv.getText().toString().trim().replace("$", "");
+//
+//        //go to paypal
+//        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(String.valueOf(cost)), "MYR", "Pay to GroceryUs", PayPalPayment.PAYMENT_INTENT_SALE);
+//        Intent intent = new Intent(this, PaymentActivity.class);
+//        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+//        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
+//        startActivityForResult(intent, PAYPAL_REQUEST_CODE);
 
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("orderId", ""+timestamp);
@@ -513,6 +557,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
         hashMap.put("deliveryFee", " "+ deliveryFee);
         hashMap.put("latitude", ""+myLatitude);
         hashMap.put("longitude",""+myLongitude);
+        //hashMap.put("paymentOptions",""+paymentOptions);
         if (isPromoCodeApplied){
             hashMap.put("discount", ""+promoPrice);
         }else {
@@ -551,6 +596,8 @@ public class ShopDetailsActivity extends AppCompatActivity {
                 });
     }
 
+
+
     private void openMap() {
         String address = "https://maps.goolge.com/maps?saddr="+ myLatitude + "," +myLongitude + "&daddr=" + shopLatitude + "," + shopLongitude;
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(address));
@@ -579,8 +626,6 @@ public class ShopDetailsActivity extends AppCompatActivity {
                             String city = ""+ds.child("city").getValue();
                             myLatitude = ""+ds.child("latitude").getValue();
                             myLongitude = ""+ds.child("longitude").getValue();
-
-
                         }
                     }
 
@@ -686,7 +731,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
     }
 
     private void sendFcmNotification(JSONObject notificationJo, String orderId) {
-        //send Volley Request
+       // send Volley Request
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send", notificationJo, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -710,11 +755,12 @@ public class ShopDetailsActivity extends AppCompatActivity {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/json");
                 headers.put("Authotization", "key="+ Constants.FCM_KEY);
-                return super.getHeaders();
+                return headers;
             }
         };
 
         Volley.newRequestQueue(this).add(jsonObjectRequest);
+
     }
 
 
