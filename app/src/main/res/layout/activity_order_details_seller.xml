@@ -47,6 +47,16 @@
             android:src="@drawable/ic_map_white"
             android:layout_toLeftOf="@+id/editBtn" />
 
+        <ImageButton
+            android:id="@+id/trackBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/mapBtn"
+            android:layout_toLeftOf="@+id/mapBtn"
+            android:background="@null"
+            android:src="@drawable/ic_track_white" />
+
     </RelativeLayout>
 
     <androidx.cardview.widget.CardView

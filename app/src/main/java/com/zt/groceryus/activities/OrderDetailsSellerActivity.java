@@ -47,7 +47,7 @@ import java.util.Map;
 
 public class OrderDetailsSellerActivity extends AppCompatActivity {
 
-    private ImageButton backBtn, editBtn, mapBtn;
+    private ImageButton backBtn, editBtn, mapBtn, trackBtn;
     private TextView orderIdTv, dateTv, orderStatusTv, emailTv, phoneTv, totalItemsTv, amountTv, addressTv;
     private RecyclerView itemsRv;
 
@@ -67,6 +67,7 @@ public class OrderDetailsSellerActivity extends AppCompatActivity {
         backBtn = findViewById(R.id.backBtn);
         editBtn = findViewById(R.id.editBtn);
         mapBtn = findViewById(R.id.mapBtn);
+        trackBtn = findViewById(R.id.trackBtn);
         orderIdTv = findViewById(R.id.orderIdTv);
         dateTv = findViewById(R.id.dateTv);
         orderStatusTv = findViewById(R.id.orderStatusTv);
@@ -94,6 +95,15 @@ public class OrderDetailsSellerActivity extends AppCompatActivity {
             }
         });
 
+        trackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OrderDetailsSellerActivity.this, TrackingActivity.class);
+                intent.putExtra("orderId", orderId);
+                startActivity(intent);
+            }
+        });
+
         mapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +121,7 @@ public class OrderDetailsSellerActivity extends AppCompatActivity {
     }
 
     private void editOrderStatusDialog() {
-        final String[] options = {"In Progress", "Completed", "Cancelled"};
+        final String[] options = {"In Progress", "Order Confirmed", "Order Processed", "Order Ready", "Cancelled"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit Order Status")
                 .setItems(options, new DialogInterface.OnClickListener() {
@@ -223,7 +233,11 @@ public class OrderDetailsSellerActivity extends AppCompatActivity {
 
                         if (orderStatus.equals("In Progress")){
                             orderStatusTv.setTextColor(getResources().getColor(R.color.colorPrimary));
-                        }else if (orderStatus.equals("Completed")){
+                        }else if (orderStatus.equals("Order Confirmed")){
+                            orderStatusTv.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        }else if (orderStatus.equals("Order Processed")){
+                            orderStatusTv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                        }else if (orderStatus.equals("Order Ready")){
                             orderStatusTv.setTextColor(getResources().getColor(R.color.colorGreen));
                         }else if (orderStatus.equals("Cancelled")){
                             orderStatusTv.setTextColor(getResources().getColor(R.color.colorRed));

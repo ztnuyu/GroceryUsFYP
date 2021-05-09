@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -41,11 +42,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.paypal.android.sdk.payments.PayPalConfiguration;
-import com.paypal.android.sdk.payments.PayPalPayment;
-import com.paypal.android.sdk.payments.PayPalService;
-import com.paypal.android.sdk.payments.PaymentActivity;
-import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.squareup.picasso.Picasso;
 import com.zt.groceryus.Config.Config;
 import com.zt.groceryus.Constants;
@@ -286,6 +282,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
         allTotalPriceTv= view.findViewById(R.id.totalTv);
 
         Button checkoutBtn = view.findViewById(R.id.checkoutBtn);
+        Button checkoutBtnPayPal = view.findViewById(R.id.checkoutBtnPayPal);
 
 
         //whenever cart dailog shows, check if promo cocde is applied or not
@@ -377,8 +374,14 @@ public class ShopDetailsActivity extends AppCompatActivity {
                 }
 
                 submitOrder();
-//                Intent intent = new Intent(ShopDetailsActivity.this, OptionsPaymentOrder.class);
-//                startActivity(intent);
+            }
+        });
+
+
+        checkoutBtnPayPal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
@@ -413,8 +416,8 @@ public class ShopDetailsActivity extends AppCompatActivity {
             }
         });
 
-
     }
+
 
 
     private void priceWithDiscount(){
@@ -539,13 +542,6 @@ public class ShopDetailsActivity extends AppCompatActivity {
 
         String timestamp = ""+System.currentTimeMillis();
         String cost = allTotalPriceTv.getText().toString().trim().replace("$", "");
-//
-//        //go to paypal
-//        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(String.valueOf(cost)), "MYR", "Pay to GroceryUs", PayPalPayment.PAYMENT_INTENT_SALE);
-//        Intent intent = new Intent(this, PaymentActivity.class);
-//        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
-//        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
-//        startActivityForResult(intent, PAYPAL_REQUEST_CODE);
 
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("orderId", ""+timestamp);
@@ -557,7 +553,6 @@ public class ShopDetailsActivity extends AppCompatActivity {
         hashMap.put("deliveryFee", " "+ deliveryFee);
         hashMap.put("latitude", ""+myLatitude);
         hashMap.put("longitude",""+myLongitude);
-        //hashMap.put("paymentOptions",""+paymentOptions);
         if (isPromoCodeApplied){
             hashMap.put("discount", ""+promoPrice);
         }else {
@@ -762,6 +757,5 @@ public class ShopDetailsActivity extends AppCompatActivity {
         Volley.newRequestQueue(this).add(jsonObjectRequest);
 
     }
-
 
 }

@@ -31,12 +31,12 @@ import java.util.Locale;
 
 public class OrderDetailsUsersActivity extends AppCompatActivity {
 
-    private String orderTo, orderId;
+    String orderTo, orderId;
 
-    private ImageButton backBtn, writeReviewBtn;
+    private ImageButton backBtn, writeReviewBtn, trackBtn;
     private TextView orderIdTv, dateTv, orderStatusTv, shopNameTv, totalItemsTv, amountTv, addressTv;
     private RecyclerView itemsRv;
-    private FirebaseAuth firebaseAuth;
+
     private ArrayList<ModelOrderedItem> orderedItemArrayList;
     private AdapterOrderedItem adapterOrderedItem;
 
@@ -55,12 +55,13 @@ public class OrderDetailsUsersActivity extends AppCompatActivity {
         addressTv = findViewById(R.id.addressTv);
         itemsRv = findViewById(R.id.itemsRv);
         writeReviewBtn = findViewById(R.id.writeReviewBtn);
+        trackBtn = findViewById(R.id.trackBtn);
 
-        Intent intent = getIntent();
-        orderTo = intent.getStringExtra("orderTo");
-        orderId = intent.getStringExtra("orderId");
+        //Intent intent = getIntent();
+        orderTo = getIntent().getStringExtra("orderTo");
+        orderId = getIntent().getStringExtra("orderId");
 
-        firebaseAuth = FirebaseAuth.getInstance();
+
         loadShopInfo();
         loadOrderDetails();
         loadOrderedItems();
@@ -75,6 +76,17 @@ public class OrderDetailsUsersActivity extends AppCompatActivity {
                 startActivity(intent1);
             }
         });
+
+        trackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intents = new Intent(OrderDetailsUsersActivity.this, TrackingActivityUser.class);
+                intents.putExtra("oId", orderId);
+                intents.putExtra("oTo", orderTo);
+                startActivity(intents);
+            }
+        });
+
     }
 
     private void loadOrderedItems() {
@@ -103,6 +115,8 @@ public class OrderDetailsUsersActivity extends AppCompatActivity {
 
                     }
                 });
+
+
     }
 
     private void loadOrderDetails() {
@@ -132,11 +146,15 @@ public class OrderDetailsUsersActivity extends AppCompatActivity {
                         calendar.setTimeInMillis(Long.parseLong(orderTime));
                         String formatedDate = DateFormat.format("dd/MM/yyyy hh:mm a", calendar).toString();
 
-                        if (orderStatus.equals("In Progress")) {
+                        if (orderStatus.equals("In Progress")){
                             orderStatusTv.setTextColor(getResources().getColor(R.color.colorPrimary));
-                        } else if (orderStatus.equals("Completed")) {
+                        }else if (orderStatus.equals("Order Confirmed")){
+                            orderStatusTv.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        }else if (orderStatus.equals("Order Processed")){
+                            orderStatusTv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                        }else if (orderStatus.equals("Order Ready")){
                             orderStatusTv.setTextColor(getResources().getColor(R.color.colorGreen));
-                        } else if (orderStatus.equals("Cancelled")) {
+                        }else if (orderStatus.equals("Cancelled")){
                             orderStatusTv.setTextColor(getResources().getColor(R.color.colorRed));
                         }
 

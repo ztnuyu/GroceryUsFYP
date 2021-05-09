@@ -17,4 +17,11 @@
     <color name="colorBlack">#000</color>
     <color name="colorGreen">#43A047</color>
     <color name="colorRed">#CA1C1C</color>
+    <color name="colorPrimaryy">#4CAF50</color>
+    <color name="colorPrimaryDarkk">#388E3C</color>
+    <color name="colorAccentt">#536DFE</color>
+    <color name="colorTextPrimaryy">#212121</color>
+    <color name="colorTextSecondaryy">#757575</color>
+    <color name="colorSemiDark">#40000000</color>
+    <color name="colorRemaining">#757575</color>
 </resources>
