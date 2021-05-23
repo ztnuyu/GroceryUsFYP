@@ -84,7 +84,10 @@ public class AdapterCartItem extends RecyclerView.Adapter<AdapterCartItem.Holder
                 ((ShopDetailsActivity)context).sTotalTv.setText("$"+String.format("%.2f", ((ShopDetailsActivity)context).allTotalPrice));
 
                 //after updated check minimum order of promo code
-                double promoPrice = Double.parseDouble(((ShopDetailsActivity)context).promoPrice);
+                double promoPrice = 0;
+                if (promoPrice != 0){
+                    promoPrice = Double.parseDouble(((ShopDetailsActivity)context).promoPrice);
+                }
                 double deliveryFee = Double.parseDouble(((ShopDetailsActivity)context).deliveryFee.replace("$", ""));
 
                 //check if promo code applied
