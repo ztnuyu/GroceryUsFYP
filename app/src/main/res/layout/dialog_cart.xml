@@ -241,12 +241,12 @@
             android:gravity="center_horizontal" />
 
         <Button
-            android:id="@+id/checkoutBtnPayPal"
+            android:id="@+id/checkoutBtnStripe"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@color/colorPrimary"
             android:padding="10dp"
-            android:text="PayPal"
+            android:text="Stripe"
             android:textColor="@color/colorWhite" />
 
         <TextView

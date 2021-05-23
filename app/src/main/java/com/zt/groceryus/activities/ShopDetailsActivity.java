@@ -1,11 +1,9 @@
 package com.zt.groceryus.activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -33,8 +31,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -43,20 +39,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-import com.zt.groceryus.Config.Config;
 import com.zt.groceryus.Constants;
 import com.zt.groceryus.R;
 import com.zt.groceryus.adapters.AdapterCartItem;
 import com.zt.groceryus.adapters.AdapterProductUser;
-import com.zt.groceryus.adapters.AdapterReview;
 import com.zt.groceryus.models.ModelCartItem;
 import com.zt.groceryus.models.ModelProduct;
-import com.zt.groceryus.models.ModelReview;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -260,6 +251,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
     public RadioGroup paymentRg;
     public RadioButton radioCod, radioPayPal;
     public Button applyBtn;
+    public boolean promoCodeApplied = false;
 
 
     //nak order! place order dialog
@@ -282,7 +274,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
         allTotalPriceTv= view.findViewById(R.id.totalTv);
 
         Button checkoutBtn = view.findViewById(R.id.checkoutBtn);
-        Button checkoutBtnPayPal = view.findViewById(R.id.checkoutBtnPayPal);
+        Button checkoutBtnStripe = view.findViewById(R.id.checkoutBtnStripe);
 
 
         //whenever cart dailog shows, check if promo cocde is applied or not
@@ -378,12 +370,39 @@ public class ShopDetailsActivity extends AppCompatActivity {
         });
 
 
-        checkoutBtnPayPal.setOnClickListener(new View.OnClickListener() {
+        checkoutBtnStripe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //validate delivery address
+                if (myLatitude.equals("")|| myLatitude.equals("null")|| myLongitude.equals("")|| myLongitude.equals("null")){
+                    //user didint enter address
+                    Toast.makeText(ShopDetailsActivity.this, "Please insert your address before placing orders. Thank you", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (myPhone.equals("")|| myPhone.equals("null")){
+                    //user dont have phone num
+                    Toast.makeText(ShopDetailsActivity.this, "Please insert your phone number before placing orders. Thank you", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (cartItemList.size() == 0){
+                    //cart is empty
+                    Toast.makeText(ShopDetailsActivity.this, "No items in the cart! Cant proceed order", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
+                String test;
+                if(isPromoCodeApplied) {
+                    test = Double.toString(Double.valueOf(allTotalPrice + Double.valueOf(deliveryFee))- Double.valueOf(promoPrice));
+                }else{
+                    test = Double.toString(Double.valueOf(allTotalPrice + Double.valueOf(deliveryFee)));
+                }
+                Intent intent = new Intent(ShopDetailsActivity.this, CheckoutActivityJava.class);
+                intent.putExtra("tp", test);
+                startActivity(intent);
             }
         });
+
+
 
 
 
@@ -391,11 +410,11 @@ public class ShopDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 /*
-                * get code from et- if not empty promomaybe applied
-                * check if code is valid
-                * check if expired
-                * check minimum order price minimumOrderPrice >= SubtotalPrice
-                * */
+                 * get code from et- if not empty promomaybe applied
+                 * check if code is valid
+                 * check if expired
+                 * check minimum order price minimumOrderPrice >= SubtotalPrice
+                 * */
                 String promotionCode = promoCodeEt.getText().toString().trim();
                 if (TextUtils.isEmpty(promotionCode)){
                     Toast.makeText(ShopDetailsActivity.this, "Please enter promo code", Toast.LENGTH_SHORT).show();
@@ -498,7 +517,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
             Date currentDate = sdformat.parse(todayDate);
             Date expireDate = sdformat.parse(promoExpDate);
             if (expireDate.compareTo(currentDate) > 0){
-              checkMinimumOrderPrice();
+                checkMinimumOrderPrice();
             }
             else if (expireDate.compareTo(currentDate) < 0){
                 Toast.makeText(this, "The promotion code is expired on "+promoExpDate, Toast.LENGTH_SHORT).show();
@@ -535,7 +554,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
     }
 
 
-    private void submitOrder() {
+    public void submitOrder() {
 
         progressDialog.setMessage("Placing order. Please wait...");
         progressDialog.show();
@@ -715,7 +734,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
             notificationBodyJo.put("orderId", orderId);
             notificationBodyJo.put("notificationTitle", NOTIFICATION_TITLE);
             notificationBodyJo.put("notificationMessage", NOTIFICATION_MESSAGE);
-           // where to send
+            // where to send
             notificationJo.put("to", NOTIFICATION_TOPIC);
             notificationJo.put("data", notificationBodyJo);
         }catch (Exception e){
@@ -726,7 +745,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
     }
 
     private void sendFcmNotification(JSONObject notificationJo, String orderId) {
-       // send Volley Request
+        // send Volley Request
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send", notificationJo, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

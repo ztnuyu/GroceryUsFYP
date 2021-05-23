@@ -61,13 +61,13 @@ public class AdapterOrderUser extends RecyclerView.Adapter<AdapterOrderUser.Hold
         holder.orderIdTv.setText("OrderId: "+orderId);
 
         //order status
-        if (orderStatus.equals("In Progress")){
+        if (orderStatus != null && orderStatus.equals("In Progress")){
             holder.statusTv.setTextColor(context.getResources().getColor(R.color.colorPrimary));
         }
-        else if (orderStatus.equals("Completed")){
+        else if (orderStatus != null && orderStatus.equals("Order Ready")){
             holder.statusTv.setTextColor(context.getResources().getColor(R.color.colorGreen));
         }
-        else if (orderStatus.equals("Cancelled")){
+        else if (orderStatus != null && orderStatus.equals("Cancelled")){
             holder.statusTv.setTextColor(context.getResources().getColor(R.color.colorRed));
         }
 
