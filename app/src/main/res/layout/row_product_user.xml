@@ -76,7 +76,14 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:drawableLeft="@drawable/ic_add_shopping_primary" />
 
-
+            <TextView
+                android:id="@+id/quantityProductTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="90"
+                android:gravity="center_vertical"
+                android:layout_below="@+id/addToCartTv"
+                android:textColor="@color/colorBlack" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -86,6 +93,7 @@
                 android:padding="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_alignParentRight="true">
+
 
                 <TextView
                     android:id="@+id/discountedPriceTv"

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.zt.groceryus.R;
 import com.zt.groceryus.activities.ShopDetailsActivity;
 import com.zt.groceryus.models.ModelCartItem;
+import com.zt.groceryus.models.ModelProduct;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,7 @@ public class AdapterCartItem extends RecyclerView.Adapter<AdapterCartItem.Holder
 
     private Context context;
     private ArrayList<ModelCartItem> cartItems;
+
 
     public AdapterCartItem(Context context, ArrayList<ModelCartItem> cartItems) {
         this.context = context;

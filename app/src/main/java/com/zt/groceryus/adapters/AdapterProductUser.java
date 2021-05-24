@@ -67,6 +67,7 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
         holder.descriptionTv.setText(productDescription);
         holder.originalPriceTv.setText("$"+originalPrice);
         holder.discountedPriceTv.setText("$"+discountPrice);
+        holder.quantityProductTv.setText(productQuantity);
 
         if (discountAvailable.equals("true")){
             //product ada discount
@@ -249,7 +250,7 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
     class HolderProductUser extends RecyclerView.ViewHolder{
 
         private ImageView productIconIv;
-        private TextView discountedNoteTv, titleTv, descriptionTv, addToCartTv, discountedPriceTv, originalPriceTv;
+        private TextView discountedNoteTv, titleTv, descriptionTv, addToCartTv, discountedPriceTv, originalPriceTv, quantityProductTv;
 
         public HolderProductUser(@NonNull View itemView) {
             super(itemView);
@@ -261,6 +262,7 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
             addToCartTv = itemView.findViewById(R.id.addToCartTv);
             discountedPriceTv = itemView.findViewById(R.id.discountedPriceTv);
             originalPriceTv = itemView.findViewById(R.id.originalPriceTv);
+            quantityProductTv = itemView.findViewById(R.id.quantityProductTv);
 
         }
     }

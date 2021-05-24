@@ -31,6 +31,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -90,6 +92,8 @@ public class ShopDetailsActivity extends AppCompatActivity {
     private AdapterCartItem adapterCartItem;
 
     private EasyDB easyDB;
+
+    public String productQuantity, tQuantity, quantity;
 
 
     @Override
@@ -306,28 +310,31 @@ public class ShopDetailsActivity extends AppCompatActivity {
 
         //get record from db
         Cursor res = easyDB.getAllData();
-        while (res.moveToNext()){
-            String id = res.getString(1);
-            String pId = res.getString(2);
-            String name = res.getString(3);
-            String price = res.getString(4);
-            String cost = res.getString(5);
-            String quantity = res.getString(6);
+        if(res!=null && res.getCount() > 0) {
+            while (res.moveToNext()){
+                String id = res.getString(1);
+                String pId = res.getString(2);
+                String name = res.getString(3);
+                String price = res.getString(4);
+                String cost = res.getString(5);
+                String quantity = res.getString(6);
 
-            allTotalPrice = allTotalPrice + Double.parseDouble(cost);
+                allTotalPrice = allTotalPrice + Double.parseDouble(cost);
 
-            ModelCartItem modelCartItem = new ModelCartItem(
-                    ""+id,
-                    ""+pId,
-                    ""+name,
-                    ""+price,
-                    ""+cost,
-                    "["+quantity+"]"
-            );
+                ModelCartItem modelCartItem = new ModelCartItem(
+                        ""+id,
+                        ""+pId,
+                        ""+name,
+                        ""+price,
+                        ""+cost,
+                        ""+quantity
+                );
 
-            cartItemList.add(modelCartItem);
+                cartItemList.add(modelCartItem);
 
+            }
         }
+
 
         adapterCartItem = new AdapterCartItem(this, cartItemList);
         cartItemsRv.setAdapter(adapterCartItem);
@@ -587,7 +594,10 @@ public class ShopDetailsActivity extends AppCompatActivity {
                         String cost1 = cartItemList.get(i).getCost();
                         String name = cartItemList.get(i).getName();
                         String price = cartItemList.get(i).getPrice();
-                        String quantity = cartItemList.get(i).getQuantity();
+
+                        quantity = cartItemList.get(i).getQuantity();
+                        productQuantity = productsList.get(i).getProductQuantity();
+                        tQuantity = String.valueOf(Integer.valueOf(productQuantity) - Integer.valueOf(quantity));
 
                         HashMap<String, String> hashMap1 = new HashMap<>();
                         hashMap1.put("pId", pId);
@@ -596,6 +606,11 @@ public class ShopDetailsActivity extends AppCompatActivity {
                         hashMap1.put("price", price);
                         hashMap1.put("quantity", quantity);
 
+                        DatabaseReference ref1 =FirebaseDatabase.getInstance().getReference("Users").child(shopUid).child("Products").child(pId);
+                        Map<String, Object> updates = new HashMap<String,Object>();
+                        updates.put("productQuantity", tQuantity);
+
+                        ref1.updateChildren(updates);
                         ref.child(timestamp).child("Items").child(pId).setValue(hashMap1);
                     }
                     progressDialog.dismiss();
@@ -609,6 +624,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
                     Toast.makeText(ShopDetailsActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
+
 
 
 

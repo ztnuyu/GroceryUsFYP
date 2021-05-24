@@ -14,6 +14,45 @@
         android:textColor="@color/colorBlack" />
 
     <TextView
+        android:id="@+id/quantityLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/itemPriceTv"
+        android:gravity="center"
+        android:text="Quantity: "
+        android:textColor="@color/colorBlack" />
+
+    <TextView
+        android:id="@+id/itemQuantityTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/itemPriceTv"
+        android:layout_toRightOf="@+id/quantityLabel"
+        android:gravity="center"
+        android:text="2"
+        android:textColor="@color/colorBlack" />
+
+    <TextView
+        android:id="@+id/totalProductQLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/itemPriceTv"
+        android:layout_toRightOf="@+id/itemQuantityTv"
+        android:gravity="center"
+        android:text="                        Quantity in Stock: "
+        android:textColor="@color/colorBlack" />
+
+    <TextView
+        android:id="@+id/itemTotalProductQTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/itemPriceTv"
+        android:layout_toRightOf="@+id/totalProductQLabel"
+        android:gravity="center"
+        android:text="2"
+        android:textColor="@color/colorBlack" />
+
+    <TextView
         android:id="@+id/itemPriceTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,15 +75,6 @@
             android:text="10/KG"
             android:textColor="@color/colorBlack" />
 
-        <TextView
-            android:id="@+id/itemQuantityTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:gravity="center"
-            android:text="[2]"
-            android:textColor="@color/colorBlack" />
 
     </LinearLayout>
 
@@ -61,7 +91,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="16dp"
         android:layout_below="@id/itemRemoveTv"
         android:background="@color/colorGreen" />
 
