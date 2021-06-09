@@ -39,13 +39,14 @@
             android:background="@color/colorGray00" />
 
 <!--        Show cart Items-->
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cartItemsRv"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:padding="5dp"
-            tools:listitem="@layout/row_cartitem"
-            android:layout_height="wrap_content" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/row_cartitem" />
 
         <RelativeLayout
             android:id="@+id/pricesLayout"

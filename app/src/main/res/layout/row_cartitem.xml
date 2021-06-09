@@ -39,7 +39,7 @@
         android:layout_below="@+id/itemPriceTv"
         android:layout_toRightOf="@+id/itemQuantityTv"
         android:gravity="center"
-        android:text="                        Quantity in Stock: "
+        android:text="                        "
         android:textColor="@color/colorBlack" />
 
     <TextView
@@ -49,7 +49,7 @@
         android:layout_below="@+id/itemPriceTv"
         android:layout_toRightOf="@+id/totalProductQLabel"
         android:gravity="center"
-        android:text="2"
+        android:text=""
         android:textColor="@color/colorBlack" />
 
     <TextView
@@ -69,7 +69,7 @@
 
         <TextView
             android:id="@+id/itemPriceEachTv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="10/KG"

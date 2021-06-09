@@ -2,6 +2,7 @@ package com.zt.groceryus.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
@@ -127,6 +128,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
         reviewsBtn = findViewById(R.id.reviewsBtn);
         ratingBar = findViewById(R.id.ratingBar);
 
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
@@ -206,6 +208,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+
     }
 
     private float ratingSum = 0;
@@ -252,8 +255,6 @@ public class ShopDetailsActivity extends AppCompatActivity {
     //need to access these views in adapter
     public TextView sTotalTv, dFeeTv, allTotalPriceTv, promoDescriptionTv, discountTv;
     public EditText promoCodeEt;
-    public RadioGroup paymentRg;
-    public RadioButton radioCod, radioPayPal;
     public Button applyBtn;
     public boolean promoCodeApplied = false;
 

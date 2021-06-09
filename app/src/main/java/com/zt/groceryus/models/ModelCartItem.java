@@ -2,7 +2,7 @@ package com.zt.groceryus.models;
 
 public class ModelCartItem {
 
-    String id, pId, name, price, cost, quantity;
+    String id, pId, name, price, cost, quantity, productQuantity;
 
     public ModelCartItem() {
     }
@@ -14,6 +14,7 @@ public class ModelCartItem {
         this.price = price;
         this.cost = cost;
         this.quantity = quantity;
+
     }
 
     public String getId() {
@@ -63,4 +64,5 @@ public class ModelCartItem {
     public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
+
 }

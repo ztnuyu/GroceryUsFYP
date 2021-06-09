@@ -121,7 +121,7 @@ public class OrderDetailsSellerActivity extends AppCompatActivity {
     }
 
     private void editOrderStatusDialog() {
-        final String[] options = {"In Progress", "Order Confirmed", "Order Processed", "Order Ready", "Cancelled"};
+        final String[] options = {"In Progress", "Order Processed", "Order Ready", "Delivery", "Cancelled"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit Order Status")
                 .setItems(options, new DialogInterface.OnClickListener() {
@@ -233,11 +233,11 @@ public class OrderDetailsSellerActivity extends AppCompatActivity {
 
                         if (orderStatus.equals("In Progress")){
                             orderStatusTv.setTextColor(getResources().getColor(R.color.colorPrimary));
-                        }else if (orderStatus.equals("Order Confirmed")){
-                            orderStatusTv.setTextColor(getResources().getColor(R.color.colorPrimary));
                         }else if (orderStatus.equals("Order Processed")){
-                            orderStatusTv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                            orderStatusTv.setTextColor(getResources().getColor(R.color.colorPrimary));
                         }else if (orderStatus.equals("Order Ready")){
+                            orderStatusTv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                        }else if (orderStatus.equals("Delivery")){
                             orderStatusTv.setTextColor(getResources().getColor(R.color.colorGreen));
                         }else if (orderStatus.equals("Cancelled")){
                             orderStatusTv.setTextColor(getResources().getColor(R.color.colorRed));

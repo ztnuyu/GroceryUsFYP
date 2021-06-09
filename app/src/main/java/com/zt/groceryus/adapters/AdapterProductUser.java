@@ -2,6 +2,7 @@ package com.zt.groceryus.adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -33,6 +35,7 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
     private Context context;
     public ArrayList<ModelProduct> productList, filterList;
     private FilterProductUser filter;
+    public int position;
 
     public AdapterProductUser(Context context, ArrayList<ModelProduct> productsList) {
         this.context = context;
@@ -48,7 +51,7 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HolderProductUser holder, int position) {
+    public void onBindViewHolder(@NonNull HolderProductUser holder,int position) {
         ModelProduct modelProduct = productList.get(position);
         String discountAvailable = modelProduct.getDiscountAvailable();
         String discountNote = modelProduct.getDiscountNote();
@@ -68,6 +71,9 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
         holder.originalPriceTv.setText("$"+originalPrice);
         holder.discountedPriceTv.setText("$"+discountPrice);
         holder.quantityProductTv.setText(productQuantity);
+        holder.pos.setText(String.valueOf(position));
+
+
 
         if (discountAvailable.equals("true")){
             //product ada discount
@@ -101,6 +107,8 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
 
             }
         });
+
+
     }
 
     private double cost = 0;
@@ -195,6 +203,7 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Toast.makeText(context, "Product index: "+, Toast.LENGTH_SHORT).show();
                 String title = titleTv.getText().toString().trim();
                 String priceEach = price;
                 String totalPrice = finalPriceTv.getText().toString().trim().replace("$", "");
@@ -228,7 +237,7 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
                 .addData("Item_Price", price)
                 .addData("Item_Quantity", quantity)
                 .doneDataAdding();
-        Toast.makeText(context, "Added into cart!", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "Added into cart!", Toast.LENGTH_SHORT).show();
 
         //update cart count
         ((ShopDetailsActivity)context).cartCount();
@@ -250,11 +259,11 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
     class HolderProductUser extends RecyclerView.ViewHolder{
 
         private ImageView productIconIv;
-        private TextView discountedNoteTv, titleTv, descriptionTv, addToCartTv, discountedPriceTv, originalPriceTv, quantityProductTv;
+        private TextView discountedNoteTv, titleTv, descriptionTv, addToCartTv, discountedPriceTv, originalPriceTv, quantityProductTv, pos;
 
         public HolderProductUser(@NonNull View itemView) {
-            super(itemView);
 
+            super(itemView);
             productIconIv = itemView.findViewById(R.id.productIconIv);
             discountedNoteTv = itemView.findViewById(R.id.discountedNoteTv);
             titleTv = itemView.findViewById(R.id.titleTv);
@@ -263,6 +272,7 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
             discountedPriceTv = itemView.findViewById(R.id.discountedPriceTv);
             originalPriceTv = itemView.findViewById(R.id.originalPriceTv);
             quantityProductTv = itemView.findViewById(R.id.quantityProductTv);
+            pos = itemView.findViewById(R.id.positionn);
 
         }
     }

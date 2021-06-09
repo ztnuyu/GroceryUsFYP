@@ -31,10 +31,10 @@
             android:id="@+id/pQuantityTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@+id/titleTv"
             android:layout_marginTop="5dp"
             android:text="Quantity"
+            android:layout_centerHorizontal="true"
             android:textColor="@color/colorWhite" />
 
         <TextView
