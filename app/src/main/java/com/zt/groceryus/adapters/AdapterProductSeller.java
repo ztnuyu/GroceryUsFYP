@@ -76,6 +76,16 @@ public class AdapterProductSeller extends RecyclerView.Adapter<AdapterProductSel
         holder.discountedPriceTv.setText("$"+discountPrice);
         holder.originalPriceTv.setText("$"+originalPrice);
 
+
+        if (Integer.valueOf(quantity) <= 5){
+            //keluar product low stock
+            holder.quantityAlertTv.setVisibility(View.VISIBLE);
+        }else
+        {
+            holder.quantityAlertTv.setVisibility(View.GONE);
+        }
+
+
         if (discountAvailable.equals("true")){
             //product ada discount
             holder.discountedPriceTv.setVisibility(View.VISIBLE);
@@ -118,6 +128,7 @@ public class AdapterProductSeller extends RecyclerView.Adapter<AdapterProductSel
         TextView descriptionTv = view.findViewById(R.id.descriptionTv);
         TextView categoryTv = view.findViewById(R.id.categoryTv);
         TextView quantityTv = view.findViewById(R.id.quantityTv);
+        TextView quantityAlertTv = view.findViewById(R.id.quantityAlertTv);
         TextView discountedPriceTv = view.findViewById(R.id.discountedPriceTv);
         TextView originalPriceTv = view.findViewById(R.id.originalPriceTv);
 
@@ -156,6 +167,7 @@ public class AdapterProductSeller extends RecyclerView.Adapter<AdapterProductSel
             discountedPriceTv.setVisibility(View.GONE);
             discountNoteTv.setVisibility(View.GONE);
         }
+
 
         try {
             Picasso.get().load(icon).placeholder(R.drawable.ic_add_shopping_primary).into(productIconIv);
@@ -244,7 +256,7 @@ public class AdapterProductSeller extends RecyclerView.Adapter<AdapterProductSel
     class HolderProductSeller extends RecyclerView.ViewHolder  {
 //        holds views of recycler view
         private ImageView productIconIv;
-        private TextView discountedNoteTv, titleTv, quantityTv, discountedPriceTv, originalPriceTv;
+        private TextView discountedNoteTv, titleTv, quantityTv, discountedPriceTv, originalPriceTv, quantityAlertTv;
 
         public HolderProductSeller(@NonNull View itemView) {
             super(itemView);
@@ -255,6 +267,7 @@ public class AdapterProductSeller extends RecyclerView.Adapter<AdapterProductSel
             quantityTv = itemView.findViewById(R.id.quantityTv);
             discountedPriceTv = itemView.findViewById(R.id.discountedPriceTv);
             originalPriceTv = itemView.findViewById(R.id.originalPriceTv);
+            quantityAlertTv = itemView.findViewById(R.id.quantityAlertTv);
         }
     }
 }

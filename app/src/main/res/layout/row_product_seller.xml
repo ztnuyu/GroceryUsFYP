@@ -55,6 +55,13 @@
                 android:text="1 KG"
                 android:textColor="@color/colorBlack"/>
 
+            <TextView
+                android:id="@+id/quantityAlertTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Product low in Stock. Please add stock!"
+                android:textColor="@color/colorRed"/>
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
