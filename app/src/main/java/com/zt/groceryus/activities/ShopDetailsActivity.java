@@ -77,7 +77,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
     private RecyclerView productsRv;
     private RatingBar ratingBar;
 
-    private String shopUid;
+    public String shopUid, orderId;
     private String myLatitude, myLongitude, myPhone;
     private String shopName, shopEmail, shopPhone, shopAddress, shopLatitude, shopLongitude;
     public String deliveryFee;
@@ -398,15 +398,8 @@ public class ShopDetailsActivity extends AppCompatActivity {
                     return;
                 }
 
-                String test;
-                if(isPromoCodeApplied) {
-                    test = Double.toString(Double.valueOf(allTotalPrice + Double.valueOf(deliveryFee))- Double.valueOf(promoPrice));
-                }else{
-                    test = Double.toString(Double.valueOf(allTotalPrice + Double.valueOf(deliveryFee)));
-                }
-                Intent intent = new Intent(ShopDetailsActivity.this, CheckoutActivityJava.class);
-                intent.putExtra("tp", test);
-                startActivity(intent);
+                submitOrderStripe();
+
             }
         });
 
@@ -445,6 +438,84 @@ public class ShopDetailsActivity extends AppCompatActivity {
 
     }
 
+    private void submitOrderStripe() {
+
+
+        progressDialog.setMessage("Placing order. Please wait...");
+        progressDialog.show();
+
+
+        String timestamp = ""+System.currentTimeMillis();
+        String cost = allTotalPriceTv.getText().toString().trim().replace("$", "");
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("orderId", ""+timestamp);
+        hashMap.put("orderTime", ""+timestamp);
+        hashMap.put("orderStatus", "To Pay");
+        hashMap.put("orderCost", ""+cost);
+        hashMap.put("orderBy", ""+firebaseAuth.getUid());
+        hashMap.put("orderTo", ""+shopUid);
+        hashMap.put("deliveryFee", " "+ deliveryFee);
+        hashMap.put("latitude", ""+myLatitude);
+        hashMap.put("longitude",""+myLongitude);
+        if (isPromoCodeApplied){
+            hashMap.put("discount", ""+promoPrice);
+        }else {
+            hashMap.put("discount","0");
+        }
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(shopUid).child("Orders");
+        ref.child(timestamp).setValue(hashMap)
+                .addOnSuccessListener(aVoid -> {
+                    for (int i=0; i <cartItemList.size();i++){
+                        String pId = cartItemList.get(i).getpId();
+                        String id = cartItemList.get(i).getId();
+                        String cost1 = cartItemList.get(i).getCost();
+                        String name = cartItemList.get(i).getName();
+                        String price = cartItemList.get(i).getPrice();
+
+                        quantity = cartItemList.get(i).getQuantity();
+                        productQuantity = productsList.get(i).getProductQuantity();
+                        tQuantity = String.valueOf(Integer.valueOf(productQuantity) - Integer.valueOf(quantity));
+
+                        HashMap<String, String> hashMap1 = new HashMap<>();
+                        hashMap1.put("pId", pId);
+                        hashMap1.put("name", name);
+                        hashMap1.put("cost", cost1);
+                        hashMap1.put("price", price);
+                        hashMap1.put("quantity", quantity);
+
+                        DatabaseReference ref1 =FirebaseDatabase.getInstance().getReference("Users").child(shopUid).child("Products").child(pId);
+                        Map<String, Object> updates = new HashMap<String,Object>();
+                        updates.put("productQuantity", tQuantity);
+
+                        ref1.updateChildren(updates);
+                        ref.child(timestamp).child("Items").child(pId).setValue(hashMap1);
+                    }
+
+                    String test;
+                    if(isPromoCodeApplied) {
+                        test = Double.toString(Double.valueOf(allTotalPrice + Double.valueOf(deliveryFee))- Double.valueOf(promoPrice));
+                    }else{
+                        test = Double.toString(Double.valueOf(allTotalPrice + Double.valueOf(deliveryFee)));
+                    }
+                    Intent intent = new Intent(ShopDetailsActivity.this, CheckoutActivityJava.class);
+                    intent.putExtra("tp", test);
+                    intent.putExtra("orderTo", shopUid);
+                    intent.putExtra("orderId", timestamp);
+                    startActivity(intent);
+
+                    progressDialog.dismiss();
+                    Toast.makeText(ShopDetailsActivity.this, "Order placed successfully", Toast.LENGTH_SHORT).show();
+                    prepareNotificationMessage(timestamp);
+
+                })
+                .addOnFailureListener(e -> {
+                    progressDialog.dismiss();
+                    Toast.makeText(ShopDetailsActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+
+    }
 
 
     private void priceWithDiscount(){

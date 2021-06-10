@@ -56,6 +56,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
     private TextView amountTextView;
     private ImageButton backBtn;
 
+    public String shopUid, orderId;
 
     public String totalPriceToPay;
 
@@ -213,7 +214,17 @@ public class CheckoutActivityJava extends AppCompatActivity {
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
+                                shopUid = getIntent().getStringExtra("orderTo");
+                                orderId = getIntent().getStringExtra("orderId");
+
+                                DatabaseReference ref1 =FirebaseDatabase.getInstance().getReference("Users").child(shopUid).child("Orders").child(orderId);
+                                Map<String, Object> updates = new HashMap<String,Object>();
+                                updates.put("orderStatus", "In Progress");
+
+                                ref1.updateChildren(updates);
+
+                                Intent intent = new Intent(CheckoutActivityJava.this, MainUserActivity.class);
+                                startActivity(intent);
                             }
                         });
                 alertDialog.show();
