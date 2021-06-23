@@ -475,6 +475,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
                         String price = cartItemList.get(i).getPrice();
 
                         quantity = cartItemList.get(i).getQuantity();
+                        //productQuantity = productsList.get(Integer.parseInt(id)).getProductQuantity();
                         productQuantity = productsList.get(i).getProductQuantity();
                         tQuantity = String.valueOf(Integer.valueOf(productQuantity) - Integer.valueOf(quantity));
 
@@ -668,7 +669,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
                         String price = cartItemList.get(i).getPrice();
 
                         quantity = cartItemList.get(i).getQuantity();
-                        productQuantity = productsList.get(i).getProductQuantity();
+                        productQuantity = productsList.get(Integer.parseInt(id)).getProductQuantity();
                         tQuantity = String.valueOf(Integer.valueOf(productQuantity) - Integer.valueOf(quantity));
 
                         HashMap<String, String> hashMap1 = new HashMap<>();

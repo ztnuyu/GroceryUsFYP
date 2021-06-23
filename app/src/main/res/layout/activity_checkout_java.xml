@@ -35,10 +35,10 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="301dp"
-        android:layout_height="206dp"
+        android:layout_width="319dp"
+        android:layout_height="223dp"
         android:layout_marginBottom="36dp"
-        android:src="@drawable/cc"
+        android:src="@drawable/creditcard"
         app:layout_constraintBottom_toTopOf="@+id/amountTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

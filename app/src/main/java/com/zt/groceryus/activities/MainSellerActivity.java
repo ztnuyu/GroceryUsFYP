@@ -175,7 +175,7 @@ public class MainSellerActivity extends AppCompatActivity {
         filterOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String[] options = {"All", "In Progress", "Order Confirmed", "Order Processed", "Order Ready", "Cancelled"};
+                String[] options = {"All", "In Progress", "Order Processed", "Order Ready", "Delivery", "Cancelled"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainSellerActivity.this);
                 builder.setTitle("Filter Orders:")
                         .setItems(options, new DialogInterface.OnClickListener() {
