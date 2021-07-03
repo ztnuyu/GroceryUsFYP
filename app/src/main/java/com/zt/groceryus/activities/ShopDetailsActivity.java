@@ -253,7 +253,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
 
     public double allTotalPrice = 0.00;
     //need to access these views in adapter
-    public TextView sTotalTv, dFeeTv, allTotalPriceTv, promoDescriptionTv, discountTv;
+    public TextView sTotalTv, dFeeTv, allTotalPriceTv, promoDescriptionTv, discountTv, ItemsLabelTv;
     public EditText promoCodeEt;
     public Button applyBtn;
     public boolean promoCodeApplied = false;
@@ -277,6 +277,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
         sTotalTv = view.findViewById(R.id.sTotalTv);
         dFeeTv = view.findViewById(R.id.dFeeTv);
         allTotalPriceTv= view.findViewById(R.id.totalTv);
+        ItemsLabelTv = view.findViewById(R.id.ItemsLabelTv);
 
         Button checkoutBtn = view.findViewById(R.id.checkoutBtn);
         Button checkoutBtnStripe = view.findViewById(R.id.checkoutBtnStripe);
@@ -352,6 +353,13 @@ public class ShopDetailsActivity extends AppCompatActivity {
 
         //reset total price on dialog dismiss
         dialog.setOnCancelListener(dialog1 -> allTotalPrice = 0.00);
+
+        ItemsLabelTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //startActivity(new Intent(ShopDetailsActivity.this, .class));
+            }
+        });
 
         checkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,6 +40,7 @@ public class MainUserActivity extends AppCompatActivity {
     private RelativeLayout shopsRl, ordersRl;
     private ImageButton logoutBtn, editProfileBtn, settingsBtn;
     private ImageView profileIv;
+    private FloatingActionButton floatingbtnchat, floatingbtnchat1;
     private RecyclerView shopsRv, ordersRv;
 
 
@@ -69,6 +71,8 @@ public class MainUserActivity extends AppCompatActivity {
         shopsRv = findViewById(R.id.shopsRv);
         ordersRv = findViewById(R.id.ordersRv);
         settingsBtn = findViewById(R.id.settingsBtn);
+        floatingbtnchat = findViewById(R.id.floatingbtnchat);
+        floatingbtnchat1 = findViewById(R.id.floatingbtnchat1);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait");
@@ -115,6 +119,20 @@ public class MainUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainUserActivity.this, SettingsActivity.class));
+            }
+        });
+
+        floatingbtnchat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainUserActivity.this, ChatBot.class));
+            }
+        });
+
+        floatingbtnchat1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainUserActivity.this, ChatBot.class));
             }
         });
     }

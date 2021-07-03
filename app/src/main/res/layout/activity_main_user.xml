@@ -129,6 +129,22 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/row_shop"/>
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingbtnchat"
+            android:layout_width="57dp"
+            android:layout_height="54dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="315dp"
+            android:layout_marginLeft="322dp"
+            android:layout_marginBottom="64dp"
+            android:background="@color/colorPrimary"
+            android:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/supportagent"
+            app:layout_constraintBottom_toBottomOf="@+id/shopsRv"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints" />
+
     </RelativeLayout>
 <!--    Orders UI-->
 
@@ -149,5 +165,23 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/row_order_user"/>
 
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingbtnchat1"
+            android:layout_width="57dp"
+            android:layout_height="54dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="315dp"
+            android:layout_marginLeft="322dp"
+            android:layout_marginBottom="64dp"
+            android:background="@color/colorPrimary"
+            android:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/supportagent"
+            app:layout_constraintBottom_toBottomOf="@+id/ordersRv"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints" />
+
     </RelativeLayout>
+
 </RelativeLayout>

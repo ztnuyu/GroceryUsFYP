@@ -16,7 +16,8 @@
         android:roundIcon="@id/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activities.CheckoutActivityJava"></activity>
+        <activity android:name=".activities.ChatBot"></activity>
+        <activity android:name=".activities.CheckoutActivityJava" />
         <activity android:name=".activities.TrackingActivityUser" />
         <activity android:name=".activities.TrackingActivity" />
         <activity android:name=".activities.OptionsPaymentOrder" />
