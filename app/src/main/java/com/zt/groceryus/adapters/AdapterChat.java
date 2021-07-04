@@ -2,6 +2,8 @@ package com.zt.groceryus.adapters;
 
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,10 +52,13 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyViewHolder> 
         return messageList.size();
     }
 
+
+
     static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView messageSend;
         TextView messageReceive;
+
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);

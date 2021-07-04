@@ -234,13 +234,13 @@
 
     <View
         android:id="@+id/viewOrderReady"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="12dp"
+        android:layout_height="10dp"
         android:layout_marginStart="30dp"
         android:background="@drawable/shape_status_current"
+        app:layout_constraintBottom_toBottomOf="@+id/imageOrderReady"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageOrderReady"
-        app:layout_constraintBottom_toBottomOf="@+id/imageOrderReady"/>
+        app:layout_constraintTop_toTopOf="@+id/imageOrderReady" />
 
     <ImageView
         android:id="@+id/imageOrderReady"

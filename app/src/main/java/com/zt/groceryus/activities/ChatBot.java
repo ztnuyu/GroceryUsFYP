@@ -40,7 +40,7 @@ public class ChatBot extends AppCompatActivity implements BotReply {
     List<ModelMessage> messageList = new ArrayList<>();
     EditText editMessage;
     ImageButton btnSend;
-    private ImageButton backBtn;
+    ImageButton backBtn;
 
     //dialogFlow
     private SessionsClient sessionsClient;
