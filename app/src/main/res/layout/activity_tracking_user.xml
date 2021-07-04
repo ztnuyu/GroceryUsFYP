@@ -184,7 +184,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="40dp"
             android:contentDescription=""
-            android:src="@drawable/cart"
+            android:src="@drawable/cartbaru"
             app:layout_constraintStart_toEndOf="@+id/viewOrderProcessed"
             app:layout_constraintTop_toBottomOf="@+id/imageOrderPlaced" />
 
