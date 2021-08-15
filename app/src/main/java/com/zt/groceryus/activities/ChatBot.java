@@ -43,6 +43,7 @@ public class ChatBot extends AppCompatActivity implements BotReply {
     ImageButton backBtn;
 
     //dialogFlow
+    private String initiateChat = "hi";
     private SessionsClient sessionsClient;
     private SessionName sessionName;
     private String uuid = UUID.randomUUID().toString();
@@ -56,6 +57,7 @@ public class ChatBot extends AppCompatActivity implements BotReply {
         editMessage = findViewById(R.id.editMessage);
         btnSend = findViewById(R.id.btnSend);
         backBtn = findViewById(R.id.backBtn);
+
 
         chatAdapter = new AdapterChat(messageList, this);
         chatView.setAdapter(chatAdapter);
@@ -100,12 +102,22 @@ public class ChatBot extends AppCompatActivity implements BotReply {
             sessionName = SessionName.of(projectId, uuid);
 
             Log.d(TAG, "projectId : " + projectId);
+
+            welcomeMessage();
         } catch (Exception e) {
             Log.d(TAG, "setUpBot: " + e.getMessage());
         }
     }
 
     private void sendMessageToBot(String message) {
+        QueryInput input = QueryInput.newBuilder()
+                .setText(TextInput.newBuilder().setText(message).setLanguageCode("en-US")).build();
+        new SendMessageInBg(this, sessionName, sessionsClient, input).execute();
+    }
+
+
+    private void welcomeMessage() {
+        String message = "start bot";
         QueryInput input = QueryInput.newBuilder()
                 .setText(TextInput.newBuilder().setText(message).setLanguageCode("en-US")).build();
         new SendMessageInBg(this, sessionName, sessionsClient, input).execute();
